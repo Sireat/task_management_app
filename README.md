@@ -26,37 +26,21 @@ A Flutter application designed to manage tasks, set due dates, and receive local
 - [Docker](https://www.docker.com/products/docker-desktop) (if using Docker for backend services)
 
 ### Setup
-
+To run the project
 1. **Clone the Repository**
 
    ```bash
    git clone https://github.com/Sireat/task_management_app.git
    cd task_management_app
    flutter pub get 
-   Configure Local Notifications
+   flutter run
+Look some screenshoots
 
-For Android:
+![Alt Text](sampleScreenshoots/home.png)
+![Alt Text](sampleScreenshoots/addtask.png)
+![Alt Text](sampleScreenshoots/animated.png)
+![Alt Text](sampleScreenshoots/profile.png)
+![Alt Text](sampleScreenshoots/animated.png)
+![Alt Text](sampleScreenshoots/setting.png)
+![Alt Text](sampleScreenshoots/black.png)
 
-Add the following permissions to your AndroidManifest.xml file located in android/app/src/main/AndroidManifest.xml:
-
-xml
-Copy code
-<uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
-Ensure you have the required settings in your MainActivity.java or MainActivity.kt to handle notifications.
-
-For iOS:
-
-Add the following to your Info.plist file located in ios/Runner/Info.plist:
-
-xml
-Copy code
-<key>UIBackgroundModes</key>
-<array>
-  <string>fetch</string>
-  <string>remote-notification</string>
-</array>
-For Linux:
-
-Add the necessary configuration for flutter_local_notifications_linux in your Linux-specific codebase. Follow the flutter_local_notifications_linux documentation for setup.
-
-flutter run
