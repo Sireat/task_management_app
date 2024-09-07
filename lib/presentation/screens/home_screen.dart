@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import '../provider/task_provider.dart';
-import '../provider/quote_provider.dart'; // Import QuoteProvider
-import '../widgets/task_tile.dart';
+import '../../core/services/notification_service.dart'; // Import your NotificationService
+import '../provider/task_provider.dart'; // TaskProvider to get tasks
+import '../provider/quote_provider.dart'; // Import QuoteProvider for quotes
+import '../widgets/task_tile.dart'; // TaskTile widget for displaying tasks
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -17,11 +18,30 @@ class _HomeScreenState extends State<HomeScreen> {
     super.initState();
     // Fetch quote when screen is initialized
     _fetchQuote();
+    // Schedule notifications for tasks due soon
+    _scheduleNotifications();
   }
 
   Future<void> _fetchQuote() async {
     final quoteProvider = Provider.of<QuoteProvider>(context, listen: false);
     await quoteProvider.fetchQuotes(); // Call the public method to initialize
+  }
+
+  Future<void> _scheduleNotifications() async {
+    final taskProvider = Provider.of<TaskProvider>(context, listen: false);
+    final notificationService = Provider.of<NotificationService>(context, listen: false);
+
+    for (var task in taskProvider.tasks) {
+      // Schedule notification for tasks due in 1 hour
+      if (!task.isCompleted && task.dueDate.isBefore(DateTime.now().add(Duration(hours: 1)))) {
+        await notificationService.showNotification(
+          task.id.hashCode, // Ensure a unique ID per task
+          'Task Reminder',
+          'Your task "${task.title}" is due soon!',
+          task.dueDate,
+        );
+      }
+    }
   }
 
   @override
@@ -32,10 +52,10 @@ class _HomeScreenState extends State<HomeScreen> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Task Management'),
-        backgroundColor: const Color.fromARGB(255, 213, 216, 218), // Darker, professional color
+        backgroundColor: const Color.fromARGB(255, 213, 216, 218),
       ),
       body: Container(
-        color: Colors.blueGrey[100], // Light background color
+        color: Colors.blueGrey[100],
         child: Column(
           children: [
             if (quoteProvider.currentQuote != null) ...[
@@ -91,7 +111,7 @@ class _HomeScreenState extends State<HomeScreen> {
       floatingActionButton: FloatingActionButton(
         onPressed: () => Navigator.pushNamed(context, '/add_edit_task'),
         child: const Icon(Icons.add, color: Colors.white),
-        backgroundColor: Colors.blueGrey[800], // Match AppBar color
+        backgroundColor: Colors.blueGrey[800],
       ),
       drawer: Drawer(
         child: ListView(
@@ -99,7 +119,7 @@ class _HomeScreenState extends State<HomeScreen> {
           children: <Widget>[
             DrawerHeader(
               decoration: BoxDecoration(
-                color: Colors.blueGrey[800], // Match AppBar color
+                color: Colors.blueGrey[800],
               ),
               child: const Text(
                 'Task Manager',

@@ -1,14 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'core/services/notification_service.dart';
 import 'presentation/provider/app_provider.dart';
 import 'presentation/provider/theme_provider.dart';
 import 'presentation/screens/home_screen.dart';
 import 'presentation/screens/add_edit_task_screen.dart';
 import 'presentation/screens/completed_tasks_screen.dart';
 import 'presentation/screens/settings_screen.dart';
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
 
-void main() {
+  // Initialize NotificationService
+  final notificationService = NotificationService();
+  await notificationService.initialize();
+
   runApp(AppProvider(
+    notificationService: notificationService,
     child: MyApp(),
   ));
 }

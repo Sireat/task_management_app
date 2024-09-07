@@ -26,7 +26,7 @@ A Flutter application designed to manage tasks, set due dates, and receive local
 - [Docker](https://www.docker.com/products/docker-desktop) (if using Docker for backend services)
 
 ### Setup
-To run the project
+To run the project on android device
 1. **Clone the Repository**
 
    ```bash
@@ -36,6 +36,7 @@ To run the project
    flutter run
 Look some screenshoots
 
+![Alt Text](sampleScreenshoots/logo.png)
 ![Alt Text](sampleScreenshoots/home.png)
 ![Alt Text](sampleScreenshoots/addtask.png)
 ![Alt Text](sampleScreenshoots/animated.png)
